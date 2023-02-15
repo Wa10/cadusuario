@@ -1,13 +1,15 @@
 package com.teste.cadusuario.dtos;
 
-import com.teste.cadusuario.domain.Funcionario;
+import com.teste.cadusuario.model.Funcionario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class FuncionarioDTO implements Serializable {

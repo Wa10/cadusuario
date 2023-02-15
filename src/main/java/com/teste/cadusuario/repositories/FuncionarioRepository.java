@@ -1,6 +1,6 @@
 package com.teste.cadusuario.repositories;
 
-import com.teste.cadusuario.domain.Funcionario;
+import com.teste.cadusuario.model.Funcionario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

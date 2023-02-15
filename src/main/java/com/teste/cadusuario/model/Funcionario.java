@@ -1,4 +1,4 @@
-package com.teste.cadusuario.domain;
+package com.teste.cadusuario.model;
 
 import com.teste.cadusuario.dtos.FuncionarioDTO;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,6 @@ public class Funcionario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter private Integer id;
 
-
     @Getter @Setter
     @NotNull(message = "nome obrigatório")
     private String nome;
@@ -36,6 +35,7 @@ public class Funcionario implements Serializable {
     @Getter @Setter private Integer nis;
 
     public Funcionario(FuncionarioDTO funcionarioDTO){
+        this.id = funcionarioDTO.getId();
         this.nome = funcionarioDTO.getNome();
         this.sobrenome = funcionarioDTO.getSobrenome();
         this.email = funcionarioDTO.getEmail();

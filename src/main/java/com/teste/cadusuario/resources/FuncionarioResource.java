@@ -1,6 +1,6 @@
 package com.teste.cadusuario.resources;
 
-import com.teste.cadusuario.domain.Funcionario;
+import com.teste.cadusuario.model.Funcionario;
 import com.teste.cadusuario.dtos.FuncionarioDTO;
 import com.teste.cadusuario.services.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,8 @@ public class FuncionarioResource {
     @GetMapping(value = "/{id}")
     public ResponseEntity<FuncionarioDTO> findById(@PathVariable Integer id) {
         Funcionario funcionario = service.findById(id);
-        FuncionarioDTO funcionarioDTO = new FuncionarioDTO(funcionario);
 
-        return ResponseEntity.ok().body(funcionarioDTO);
+        return ResponseEntity.ok().body(new FuncionarioDTO(funcionario));
     }
 
     @GetMapping()
@@ -43,4 +42,18 @@ public class FuncionarioResource {
 
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<FuncionarioDTO> update(@PathVariable Integer id, @Valid @RequestBody FuncionarioDTO funcionarioDTO){
+        Funcionario funcionario = service.update(id, funcionarioDTO);
+
+        return ResponseEntity.ok().body(new FuncionarioDTO(funcionario));
+    }
+
+    @DeleteMapping(value = "/{id}")
+        public ResponseEntity<FuncionarioDTO> delete(@PathVariable Integer id){
+            service.delete(id);
+
+            return ResponseEntity.noContent().build();
+        }
 }

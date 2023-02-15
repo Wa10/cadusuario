@@ -1,6 +1,6 @@
 package com.teste.cadusuario.services;
 
-import com.teste.cadusuario.domain.Funcionario;
+import com.teste.cadusuario.model.Funcionario;
 import com.teste.cadusuario.dtos.FuncionarioDTO;
 import com.teste.cadusuario.exceptions.ConstraintViolationException;
 import com.teste.cadusuario.exceptions.FuncionarioNotFoundException;
@@ -15,10 +15,10 @@ import java.util.Optional;
 public class FuncionarioService {
 
     @Autowired
-    private FuncionarioRepository repository;
+    private FuncionarioRepository funcionarioRepository;
 
     public Funcionario findById(Integer id){
-        Optional<Funcionario> funcionario = repository.findById(id);
+        Optional<Funcionario> funcionario = funcionarioRepository.findById(id);
 
         return funcionario.orElseThrow(() -> new FuncionarioNotFoundException("Não foi encontrado funcionário com id: " + id));
     }
@@ -27,21 +27,34 @@ public class FuncionarioService {
         validaPorEmailENis(funcionarioDTO);
         Funcionario novoFuncionario = new Funcionario(funcionarioDTO);
 
-        return repository.save(novoFuncionario);
+        return funcionarioRepository.save(novoFuncionario);
     }
 
     public List<Funcionario> findAll() {
-        return repository.findAll();
+        return funcionarioRepository.findAll();
+    }
+
+    public Funcionario update(Integer id, FuncionarioDTO funcionarioDTO) {
+        Funcionario funcionarioExistente = findById(id);
+        funcionarioDTO.setId(id);
+        validaPorEmailENis(funcionarioDTO);
+        funcionarioExistente = new Funcionario(funcionarioDTO);
+
+        return funcionarioRepository.save(funcionarioExistente);
+    }
+
+    public void delete(Integer id) {
+        funcionarioRepository.delete(findById(id));
     }
 
     private void validaPorEmailENis(FuncionarioDTO funcionarioDTO) {
-        Optional<Funcionario> funcionario = repository.findByEmail(funcionarioDTO.getEmail());
-        if(funcionario.isPresent()){
+        Optional<Funcionario> funcionario = funcionarioRepository.findByEmail(funcionarioDTO.getEmail());
+        if(funcionario.isPresent() && funcionarioDTO.getId() != funcionario.get().getId()){
             throw new ConstraintViolationException("Email já cadastrado");
         }
 
-        funcionario = repository.findByNis(funcionarioDTO.getNis());
-        if(funcionario.isPresent()){
+        funcionario = funcionarioRepository.findByNis(funcionarioDTO.getNis());
+        if(funcionario.isPresent() && funcionarioDTO.getId() != funcionario.get().getId()){
             throw new ConstraintViolationException("NIS duplicado");
         }
     }
