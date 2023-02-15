@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,7 +37,7 @@ public class FuncionarioResource {
     }
 
     @PostMapping
-    public ResponseEntity<FuncionarioDTO> create(@RequestBody FuncionarioDTO novoFuncionarioDTO) {
+    public ResponseEntity<FuncionarioDTO> create(@Valid @RequestBody FuncionarioDTO novoFuncionarioDTO) {
         Funcionario funcionario = service.save(novoFuncionarioDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(funcionario.getId()).toUri();
 

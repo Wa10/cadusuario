@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
@@ -19,13 +20,19 @@ public class Funcionario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter private Integer id;
 
-    @Getter @Setter private String nome;
+
+    @Getter @Setter
+    @NotNull(message = "nome obrigatório")
+    private String nome;
+
     @Getter @Setter private String sobrenome;
 
     @Column(unique = true)
+    @NotNull(message = "email obrigatório")
     @Getter @Setter private String email;
 
     @Column(unique = true)
+    @NotNull
     @Getter @Setter private Integer nis;
 
     public Funcionario(FuncionarioDTO funcionarioDTO){
