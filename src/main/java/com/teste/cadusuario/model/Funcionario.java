@@ -32,7 +32,7 @@ public class Funcionario implements Serializable {
 
     @Column(unique = true)
     @NotNull
-    @Getter @Setter private Integer nis;
+    @Getter @Setter private Long nis;
 
     public Funcionario(FuncionarioDTO funcionarioDTO){
         this.id = funcionarioDTO.getId();

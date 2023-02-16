@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Integer> {
-    Optional<Funcionario> findByNis(Integer nis);
+    Optional<Funcionario> findByNis(Long nis);
     Optional<Funcionario> findByEmail(String email);
 
 }

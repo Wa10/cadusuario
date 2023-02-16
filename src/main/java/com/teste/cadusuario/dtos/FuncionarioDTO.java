@@ -18,7 +18,7 @@ public class FuncionarioDTO implements Serializable {
     private String nome;
     private String sobrenome;
     private String email;
-    private Integer nis;
+    private Long nis;
 
     public FuncionarioDTO(Funcionario funcionario){
         this.id = funcionario.getId();
